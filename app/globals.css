@@ -1,3 +1,3 @@
 @import "tailwindcss";
 :root{--green:#0B5D3B;--green2:#2E8B57;--lime:#9BCB3B;--gold:#C99A2E;--cream:#FBFAF5;--ink:#17352A;--muted:#6B7C74;--line:#E6ECE8}
-*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,"Noto Sans Thai",sans-serif} button,a{font:inherit}.soft{box-shadow:0 14px 40px rgba(11,93,59,.08)}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,"Noto Sans Thai",sans-serif;-webkit-font-smoothing:antialiased} button,a{font:inherit} button{cursor:pointer} .soft{box-shadow:0 14px 40px rgba(11,93,59,.08)}
