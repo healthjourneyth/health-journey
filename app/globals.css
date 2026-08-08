@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
 @import "tailwindcss";
-:root{--green:#0B5D3B;--green2:#2E8B57;--lime:#9BCB3B;--gold:#C99A2E;--cream:#FBFAF5;--ink:#17352A;--muted:#6B7C74;--line:#E6ECE8}
-*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,"Noto Sans Thai",sans-serif;-webkit-font-smoothing:antialiased} button,a{font:inherit} button{cursor:pointer} .soft{box-shadow:0 14px 40px rgba(11,93,59,.08)}
+:root{--green:#3f7651;--green2:#6d9b55;--lime:#b9d47b;--gold:#c89635;--cream:#fbf8ef;--ink:#3d4038;--muted:#78847b;--line:#e9dfc8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:'Anuphan','Noto Sans Thai','Leelawadee UI',sans-serif;-webkit-font-smoothing:antialiased}button,a{font:inherit}button{cursor:pointer}.soft{box-shadow:0 14px 40px rgba(55,75,58,.08)}
