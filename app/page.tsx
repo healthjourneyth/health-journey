@@ -2,6 +2,9 @@
 import Link from 'next/link';
 import { ArrowRight, Check, Heart, Leaf, Route, Droplets, Footprints, Moon, Salad, ShieldCheck, Sparkles, Users } from 'lucide-react';
 
+const LINE_URL = 'https://lin.ee/onjp01B';
+const LINE_QR = `https://quickchart.io/qr?text=${encodeURIComponent(LINE_URL)}&size=220&margin=2`;
+
 const today = [
   { icon: Droplets, title: 'ดื่มน้ำ', sub: 'เป้าหมาย 2.5 ลิตร', value: '1.5 ลิตร วันนี้' },
   { icon: Footprints, title: 'เดิน', sub: 'เป้าหมาย 6,000 ก้าว', value: '3,200 ก้าว วันนี้' },
@@ -58,7 +61,10 @@ export default function Home() {
 
       <section className="mx-auto max-w-[1500px] px-4 pb-12 md:px-7"><div className="grid gap-5 lg:grid-cols-[1fr_1fr]">
         <div className="rounded-[30px] bg-white p-6 ring-1 ring-[#eee5d4]"><div className="flex items-center justify-between gap-5"><div><div className="text-[15px] text-[#68766e]">คะแนนสุขภาพของคุณ</div><h2 className="mt-1 text-[25px] font-semibold text-[#176646]">เริ่มต้นจากตัวเรา ไม่ต้องเปรียบเทียบกับใคร</h2></div><div className="flex h-[82px] w-[82px] shrink-0 items-center justify-center rounded-full border-[9px] border-[#e5efd5] border-t-[#6d9b55] text-[27px] font-semibold text-[#3f7651]">68</div></div><div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">{['โภชนาการ 72','การเคลื่อนไหว 55','การนอน 60','ความเครียด 75'].map(x=><div key={x} className="rounded-2xl bg-[#fbfaf4] p-3 text-[15px] font-medium text-[#596960]">{x}</div>)}</div><Link href="/result" className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#f1f6e8] px-4 py-2.5 text-[15px] font-semibold text-[#3d744d]">ดูเส้นทางสุขภาพของฉัน <ArrowRight size={16}/></Link></div>
-        <div className="rounded-[30px] bg-[#fffdf7] p-6 ring-1 ring-[#eee5d4]"><div className="flex items-center gap-3"><div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f3e7d4] text-[#c89635]"><Heart size={21}/></div><div><div className="text-[15px] text-[#6d7b73]">อยากมีคนช่วยดูแลต่อไหม?</div><h2 className="text-[25px] font-semibold text-[#176646]">จองคิวปรึกษาโค้ชส่วนตัว ❤️</h2></div></div><p className="mt-4 text-[16px] leading-7 text-[#52645a]">ถ้าอยากคุยเรื่องสุขภาพของตัวเองแบบเจาะจง กดจองคิวผ่าน LINE ได้เลยค่ะ</p><a href="https://lin.ee/onjp01B" target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center justify-center gap-3 rounded-full bg-[#087b58] px-6 py-3.5 text-[17px] font-semibold text-white shadow-lg shadow-[#087b58]/15 transition hover:-translate-y-0.5">จองคิวปรึกษาโค้ชส่วนตัว <ArrowRight size={18}/></a><div className="mt-3 text-[14px] text-[#6c7a72]">คุยต่อกับ Health Coach ผ่าน LINE • FG4U</div></div>
+        <div className="rounded-[30px] bg-[#fffdf7] p-6 ring-1 ring-[#eee5d4]"><div className="flex items-center gap-3"><div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f3e7d4] text-[#c89635]"><Heart size={21}/></div><div><div className="text-[15px] text-[#6d7b73]">อยากมีคนช่วยดูแลต่อไหม?</div><h2 className="text-[25px] font-semibold text-[#176646]">จองคิวปรึกษาโค้ชส่วนตัว ❤️</h2></div></div><p className="mt-4 text-[16px] leading-7 text-[#52645a]">ถ้าอยากคุยเรื่องสุขภาพของตัวเองแบบเจาะจง กดจองคิวผ่าน LINE ได้เลยค่ะ</p>
+          <div className="mt-5 md:hidden"><a href={LINE_URL} target="_blank" rel="noreferrer" className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#087b58] px-6 py-3.5 text-[17px] font-semibold text-white shadow-lg shadow-[#087b58]/15 transition hover:-translate-y-0.5">เปิด LINE OA เพื่อคุยกับโค้ช <ArrowRight size={18}/></a></div>
+          <div className="mt-5 hidden items-center gap-5 rounded-[24px] bg-[#f7f8ef] p-4 md:flex"><div className="shrink-0 rounded-2xl bg-white p-2 shadow-sm ring-1 ring-[#e8eadf]"><img src={LINE_QR} alt="QR Code สำหรับเพิ่มเพื่อน LINE OA FG4U" width={150} height={150} className="h-[150px] w-[150px]"/></div><div><div className="text-[18px] font-semibold text-[#176646]">เปิด LINE OA ผ่านคอมพิวเตอร์</div><p className="mt-1 text-[14px] leading-6 text-[#65736b]">ใช้โทรศัพท์สแกน QR Code นี้ แล้วเพิ่มเพื่อน LINE OA เพื่อคุยกับ Health Coach ได้เลยค่ะ</p><div className="mt-2 text-[13px] text-[#78857e]">LINE OA • FG4U</div></div></div>
+        </div>
       </div></section>
     </main>
   );
