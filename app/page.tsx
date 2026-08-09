@@ -34,8 +34,8 @@ export default function Home() {
               </div>
               <div className="mt-5 flex items-center gap-2 text-[14px] font-medium text-[#53645b]"><ShieldCheck size={17} className="text-[#6b9c57]"/> ข้อมูลของคุณเป็นความลับ • เริ่มได้โดยไม่ต้องเก่งเรื่องสุขภาพ</div>
             </div>
-            <div className="relative min-h-[430px] overflow-hidden lg:min-h-[560px]">
-              <img src="/family-hero.svg" alt="ครอบครัวหลายวัยใช้เวลาร่วมกันอย่างมีความสุข" className="absolute inset-0 h-full w-full object-cover"/>
+            <div className="relative aspect-[1.45] overflow-hidden bg-[#f8f2e7] lg:aspect-auto lg:min-h-[430px]">
+              <img src="/family-hero.jpg" alt="ครอบครัวหลายวัยใช้เวลาร่วมกันอย่างมีความสุข" className="absolute inset-0 h-full w-full object-cover"/>
               <div className="absolute inset-0 bg-gradient-to-r from-[#fffaf0]/15 via-transparent to-[#2b5d43]/5"/>
               <div className="absolute bottom-5 left-5 right-5 rounded-[24px] bg-white/92 p-4 shadow-lg backdrop-blur-sm ring-1 ring-white">
                 <div className="flex items-center gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#f4eedc] text-[#c89635]"><Heart size={20} className="fill-[#f1dfac]"/></div><div><p className="text-[14px] text-[#64736b]">สุขภาพดี ไม่ใช่แค่เพื่อตัวเรา</p><p className="text-[19px] font-semibold text-[#236746]">แต่เพื่อคนที่เรารัก ❤️</p></div></div>
