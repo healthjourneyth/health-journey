@@ -1,161 +1,20 @@
+'use client';
 import Link from 'next/link';
-import {
-  ArrowRight,
-  CheckCircle2,
-  FileHeart,
-  Heart,
-  MessageCircle,
-  ShieldCheck,
-  Sparkles,
-  UserRound,
-} from 'lucide-react';
+import { ArrowRight, CheckCircle2, Facebook, FileHeart, Heart, Instagram, MessageCircle, ShieldCheck, Target, UserRound, Pill } from 'lucide-react';
 
-const LINE_URL = 'https://lin.ee/onjp01B';
+const LINE_URL='https://lin.ee/onjp01B';
+const FACEBOOK_URL='https://www.facebook.com/profile.php?id=61592684559736';
+const INSTAGRAM_URL='https://www.instagram.com/healthjourneybyfg4u/';
+const HERO_WOMAN='https://images.pexels.com/photos/6740804/pexels-photo-6740804.jpeg?auto=compress&cs=tinysrgb&w=1200';
+const BIOS_IMAGE='https://cosmic-assets.unicity.com/shop2/THA/content_images/3671bd0755564f768df28b8429a9c0a6/3.jpg';
+const goals=[['ลดน้ำหนัก / ลดรอบเอว','อยากผอมลงอย่างสุขภาพดี','⚖️'],['ลดไขมันหน้าท้อง','อยากลดพุง หุ่นกระชับ','🧘‍♀️'],['ควบคุมระดับน้ำตาล','น้ำตาลสูงหรือเสี่ยงเบาหวาน','🩸'],['ควบคุมความดัน','ความดันสูงหรือเสี่ยงโรคหัวใจ','❤️'],['ลดความอยากอาหาร / กินจุกจิก','หิวง่าย ควบคุมการกินยาก','🍽️'],['เพิ่มพลังงาน','อ่อนเพลีย เหนื่อยง่าย ไม่มีแรง','🏃‍♀️'],['นอนหลับดีขึ้น','นอนหลับยาก ตื่นกลางดึก','😴'],['ลดความเครียด','เครียดง่าย วิตกกังวล','🌿'],['ดูแลสุขภาพระยะยาว','อยากสร้างภูมิคุ้มกันและดูแลตัวเอง','🛡️'],['อื่นๆ','โปรดระบุในขั้นถัดไป','📝']] as const;
+const steps=[['1','ข้อมูลพื้นฐาน','เกี่ยวกับตัวคุณ',UserRound],['2','เป้าหมายสุขภาพ','สิ่งที่คุณอยากดูแล',Target],['3','สุขภาพปัจจุบัน','อาการและพฤติกรรม',Heart],['4','ยาและอาหารเสริม','ที่ทานอยู่',Pill],['5','ผลตรวจสุขภาพ','และข้อมูลติดต่อ',FileHeart]] as const;
 
-const benefits = [
-  { title: 'ข้อมูลพื้นฐาน', text: 'อายุ น้ำหนัก ส่วนสูง และเป้าหมายสุขภาพ', Icon: UserRound },
-  { title: 'เรื่องสุขภาพ', text: 'โรคประจำตัว อาการ และสิ่งที่อยากให้โค้ชรู้', Icon: Heart },
-  { title: 'ยาที่ทานอยู่', text: 'ชื่อยาและระยะเวลาที่ทาน เพื่อประกอบการพูดคุย', Icon: FileHeart },
-  { title: 'ผลตรวจสุขภาพ', text: 'ถ้ามี สามารถแนบผลตรวจล่าสุดให้โค้ชช่วยดูเบื้องต้น', Icon: Sparkles },
-];
-
-export default function Home() {
-  return (
-    <main className="min-h-screen bg-[#fbf8ef] text-[#29463b]">
-      <section className="mx-auto max-w-[1200px] px-5 pb-8 pt-6 md:px-8 md:pt-8">
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-[17px] font-semibold text-[#176646]">
-            <Heart className="fill-[#e8f3df]" />
-            Health Journey
-          </div>
-          <span className="rounded-full bg-white px-4 py-2 text-sm text-[#65756d] ring-1 ring-[#eee5d4]">
-            Health Coach
-          </span>
-        </nav>
-
-        <div className="mt-7 grid overflow-hidden rounded-[36px] bg-white shadow-[0_20px_60px_rgba(64,78,55,.09)] ring-1 ring-[#eee5d4] lg:grid-cols-[1.05fr_.95fr]">
-          <div className="flex flex-col justify-center px-7 py-11 md:px-12 md:py-14">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full bg-[#f1f6e8] px-4 py-2 text-sm font-medium text-[#477552]">
-              <Sparkles size={16} />
-              ประเมินสุขภาพเบื้องต้น
-            </div>
-            <h1 className="mt-5 max-w-[650px] text-[2.15rem] font-semibold leading-[1.25] tracking-tight text-[#315047] md:text-[3.35rem]">
-              รู้ก่อนว่า
-              <br />
-              <span className="text-[#24774f]">สุขภาพของคุณ</span>
-              <br />
-              ควรเริ่มดูแลตรงไหน
-            </h1>
-            <p className="mt-5 max-w-[600px] text-[17px] leading-8 text-[#5b6b62] md:text-[19px]">
-              ตอบคำถามสั้น ๆ เกี่ยวกับตัวคุณ เป้าหมาย สุขภาพ ยาที่ทานอยู่ และผลตรวจถ้ามี
-              แล้วให้ Health Coach ช่วยมองภาพรวมเบื้องต้นไปด้วยกัน
-            </p>
-            <Link
-              href="/assessment"
-              className="mt-7 inline-flex w-fit items-center gap-3 rounded-full bg-[#087b58] px-7 py-4 text-[17px] font-semibold text-white shadow-lg"
-            >
-              เริ่มประเมินสุขภาพฟรี <ArrowRight size={18} />
-            </Link>
-            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#65756d]">
-              <span className="inline-flex items-center gap-2">
-                <ShieldCheck size={16} className="text-[#6b9c57]" />
-                ใช้เวลาไม่กี่นาที
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-[#6b9c57]" />
-                ไม่มีคำตอบถูกผิด
-              </span>
-            </div>
-          </div>
-
-          <div className="relative min-h-[390px] overflow-hidden bg-[#eef4e8] p-6 md:p-10">
-            <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#dfead3]" />
-            <div className="absolute -bottom-20 -left-16 h-56 w-56 rounded-full bg-[#f3e7d4]" />
-            <div className="relative flex h-full items-center justify-center">
-              <div className="w-full max-w-[390px] rounded-[30px] bg-white p-6 shadow-[0_20px_55px_rgba(64,78,55,.12)]">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm text-[#728078]">Health Profile</div>
-                    <div className="mt-1 text-xl font-semibold text-[#176646]">ภาพรวมของคุณ</div>
-                  </div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#f1f6e8] text-[#5c9852]">
-                    <FileHeart size={21} />
-                  </div>
-                </div>
-                <div className="mt-6 space-y-3">
-                  {['ข้อมูลพื้นฐาน', 'เป้าหมายสุขภาพ', 'ยาและสุขภาพ', 'ผลตรวจ (ถ้ามี)'].map((item, index) => (
-                    <div key={item} className="flex items-center gap-3 rounded-2xl bg-[#fbfaf4] p-4">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#eaf4e5] text-sm font-semibold text-[#4f8555]">
-                        {index + 1}
-                      </div>
-                      <span className="font-medium text-[#46594f]">{item}</span>
-                      <CheckCircle2 className="ml-auto text-[#73a35d]" size={18} />
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-5 rounded-2xl bg-[#eef8f3] p-4 text-sm leading-6 text-[#4f6d5c]">
-                  ข้อมูลเหล่านี้ช่วยให้โค้ชคุยกับคุณได้ตรงจุดมากขึ้น ❤️
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-[1200px] px-5 py-7 md:px-8">
-        <div className="text-center">
-          <div className="text-sm font-medium text-[#6d7c73]">เราอยากรู้จักคุณมากกว่าแค่ตัวเลขบนตาชั่ง</div>
-          <h2 className="mt-2 text-[1.9rem] font-semibold text-[#176646] md:text-[2.35rem]">ข้อมูลที่ช่วยให้โค้ชเข้าใจคุณ</h2>
-        </div>
-        <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {benefits.map(({ title, text, Icon }) => (
-            <div key={title} className="rounded-[26px] bg-white p-6 ring-1 ring-[#eee5d4]">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f1f6e8] text-[#5b9855]">
-                <Icon size={21} />
-              </div>
-              <h3 className="mt-4 text-[17px] font-semibold text-[#405348]">{title}</h3>
-              <p className="mt-2 text-[14px] leading-6 text-[#65756d]">{text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-[1200px] px-5 py-7 md:px-8">
-        <div className="grid gap-5 lg:grid-cols-[.9fr_1.1fr]">
-          <div className="rounded-[30px] bg-[#176646] p-7 text-white md:p-9">
-            <div className="text-sm text-[#d9f0d2]">จากแบบประเมินสู่การดูแล</div>
-            <h2 className="mt-2 text-[1.9rem] font-semibold leading-tight">เราไม่ได้เอาตัวเลขมาตัดสินคุณ</h2>
-            <p className="mt-4 leading-7 text-white/85">
-              ข้อมูลที่คุณให้จะเป็นเพียงจุดเริ่มต้น เพื่อช่วยให้ Health Coach มองเห็นภาพรวมและชวนคุณคุยว่าควรเริ่มดูแลเรื่องไหนก่อน
-            </p>
-            <Link href="/assessment" className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 font-semibold text-[#176646]">
-              เริ่มประเมิน <ArrowRight size={17} />
-            </Link>
-          </div>
-
-          <div className="rounded-[30px] bg-white p-7 ring-1 ring-[#eee5d4] md:p-9">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f1f6e8] text-[#5b9855]">
-                <MessageCircle size={21} />
-              </div>
-              <div>
-                <div className="text-sm text-[#718078]">หลังส่งข้อมูล</div>
-                <h2 className="text-[1.6rem] font-semibold text-[#176646]">คุยต่อกับ Health Coach</h2>
-              </div>
-            </div>
-            <p className="mt-4 leading-7 text-[#5f7067]">
-              ถ้าต้องการคุยเรื่องสุขภาพของตัวเองแบบเจาะจง สามารถติดต่อผ่าน LINE ได้ค่ะ
-            </p>
-            <a href={LINE_URL} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#087b58] px-6 py-3.5 font-semibold text-white">
-              เปิด LINE คุยกับโค้ช <ArrowRight size={17} />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <footer className="mx-auto max-w-[1200px] px-5 pb-10 pt-6 text-center text-xs leading-6 text-[#7a867f] md:px-8">
-        การประเมินนี้เป็นการประเมินสุขภาพเบื้องต้น ไม่ใช่การวินิจฉัยโรค และไม่ควรใช้แทนคำแนะนำจากแพทย์ โดยเฉพาะเรื่องยาและการรักษา
-      </footer>
-    </main>
-  );
-}
+export default function Home(){return <main className="min-h-screen overflow-hidden bg-[#fffaf0] text-[#193f31]">
+<header className="sticky top-0 z-20 border-b border-[#f2dfb6]/70 bg-[#fffaf0]/90 backdrop-blur"><div className="mx-auto flex max-w-[1280px] items-center justify-between px-5 py-4 md:px-8"><Link href="/" className="flex items-center gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#edf7d7]"><Heart size={24} className="fill-[#ffd35a] text-[#5d982f]"/></div><div><div className="text-lg font-extrabold tracking-tight text-[#145b3f]">Health Journey</div><div className="text-xs text-[#6f7d70]">by Nook Health Coach</div></div></Link><nav className="hidden items-center gap-7 text-sm font-semibold text-[#496158] lg:flex"><a href="#assessment">ประเมินสุขภาพ</a><a href="#steps">ขั้นตอน</a><a href="#goals">เป้าหมายสุขภาพ</a><a href="#contact">ติดต่อเรา</a></nav><a href={LINE_URL} target="_blank" rel="noreferrer" className="rounded-full bg-[#087b58] px-5 py-3 text-sm font-bold text-white shadow-md">💬 คุยกับโค้ช</a></div></header>
+<section id="assessment" className="relative"><div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_10%_20%,#fff0b5,transparent_32%),radial-gradient(circle_at_90%_15%,#dff2b8,transparent_28%)]"/><div className="mx-auto grid max-w-[1280px] items-center gap-8 px-5 py-10 md:px-8 md:py-14 lg:grid-cols-[1fr_1fr]"><div className="order-2 lg:order-1"><div className="inline-flex items-center gap-2 rounded-full bg-[#fff0bd] px-5 py-2.5 text-base font-extrabold text-[#f06d17]">❤️ ประเมินสุขภาพเบื้องต้น ฟรี!</div><h1 className="mt-6 text-[3rem] font-black leading-[1.05] tracking-tight text-[#f06416] md:text-[4.7rem]">มารู้จักสุขภาพ<br/><span className="text-[#17583d]">ของคุณให้มากขึ้น</span></h1><p className="mt-6 max-w-xl text-lg leading-8 text-[#4f6258] md:text-xl">ข้อมูลที่คุณให้ จะช่วยให้ Health Coach มองเห็นภาพรวม และชวนคุณคุยว่าควรเริ่มดูแลเรื่องไหนก่อน</p><Link href="/assessment" className="mt-7 inline-flex items-center gap-4 rounded-full bg-gradient-to-r from-[#ff7b18] to-[#ffae13] px-8 py-4 text-xl font-black text-white shadow-xl shadow-orange-200">เริ่มประเมินสุขภาพฟรี <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-[#ef7117]"><ArrowRight size={20}/></span></Link><div className="mt-5 flex flex-wrap gap-5 text-base font-semibold text-[#66756b]"><span>◷ ใช้เวลาเพียง 5–7 นาที</span><span>✓ ไม่มีคำตอบถูกผิด</span></div></div><div className="relative order-1 min-h-[520px] lg:order-2"><div className="absolute inset-6 rounded-[46px] bg-[#e7f3d4]"/><div className="absolute -left-2 bottom-4 text-7xl">🍋</div><div className="absolute -right-2 top-8 text-6xl">🌿</div><div className="relative h-full overflow-hidden rounded-[46px] bg-white shadow-2xl ring-1 ring-white/70"><img src={HERO_WOMAN} alt="Health Coach wellness" className="h-full min-h-[520px] w-full object-cover object-center"/><div className="absolute inset-0 bg-gradient-to-t from-[#f9c95d]/20 via-transparent to-white/10"/><div className="absolute right-5 top-5 rounded-3xl bg-white/90 px-5 py-4 shadow-lg backdrop-blur"><div className="flex items-center gap-2 font-bold text-[#276348]"><ShieldCheck size={22}/> ข้อมูลของคุณปลอดภัย 100%</div><div className="mt-1 text-sm text-[#65766c]">ใช้เพื่อการประเมินโดยโค้ชเท่านั้น</div></div><div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4"><div className="rounded-3xl bg-white/92 px-5 py-4 shadow-lg backdrop-blur"><div className="text-base font-black text-[#145b3f]">💛 ดูแลสุขภาพแบบเข้าใจคุณ</div><div className="mt-1 font-semibold text-[#4d6157]">ไม่เร่งรีบ ไม่กดดัน แต่ทำให้ยั่งยืน</div></div><div className="hidden rounded-3xl bg-white/95 p-3 shadow-xl sm:block"><img src={BIOS_IMAGE} alt="Bios Life S" className="h-24 w-32 rounded-2xl object-contain"/></div></div></div></div></div></section>
+<section id="steps" className="mx-auto max-w-[1280px] px-5 py-8 md:px-8 md:py-12"><div className="rounded-[38px] bg-white p-7 shadow-lg ring-1 ring-[#f0e4cb] md:p-10"><div className="text-center"><div className="text-sm font-extrabold tracking-widest text-[#f28a1b]">SIMPLE • PERSONAL • PRIVATE</div><h2 className="mt-2 text-3xl font-black text-[#145b3f] md:text-4xl">ขั้นตอนการประเมิน</h2></div><div className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">{steps.map(([num,title,sub,Icon])=><div key={num} className="text-center"><div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7b18] to-[#ffc928] text-white shadow-lg"><Icon size={28}/></div><div className="mt-3 text-2xl font-black text-[#f06d16]">{num}</div><div className="text-lg font-extrabold text-[#1c523c]">{title}</div><div className="mt-1 text-sm text-[#65766c]">{sub}</div></div>)}</div><div className="mx-auto mt-8 max-w-2xl rounded-full bg-[#fff4cf] px-5 py-3 text-center text-sm font-semibold text-[#5d684f]">🛡️ ข้อมูลของคุณจะถูกเก็บเป็นความลับและใช้เพื่อการประเมินโดย Health Coach เท่านั้น</div></div></section>
+<section id="goals" className="relative mx-auto max-w-[1280px] px-5 py-8 md:px-8 md:py-12"><div className="absolute left-0 top-10 -z-10 text-7xl opacity-30">🍋</div><div className="absolute right-0 top-20 -z-10 text-7xl opacity-30">🌱</div><div className="text-center"><div className="text-sm font-extrabold tracking-widest text-[#f28a1b]">YOUR HEALTH • YOUR JOURNEY</div><h2 className="mt-2 text-3xl font-black text-[#f06b17] md:text-4xl">วันนี้คุณอยากดูแลเรื่องไหนที่สุด?</h2><p className="mt-2 text-lg font-semibold text-[#586b61]">เลือกได้หลายข้อ</p></div><div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">{goals.map(([title,sub,emoji])=><div key={title} className="rounded-[24px] bg-white p-4 shadow-sm ring-1 ring-[#f0dfbb] transition hover:-translate-y-1 hover:shadow-lg"><div className="flex h-24 items-center justify-center rounded-[20px] bg-gradient-to-br from-[#fff6d9] to-[#eef7df] text-5xl">{emoji}</div><h3 className="mt-4 text-center text-lg font-black leading-tight text-[#174e38]">{title}</h3><p className="mt-2 text-center text-sm leading-5 text-[#69766f]">{sub}</p></div>)}</div><div className="mx-auto mt-8 max-w-3xl rounded-3xl border border-[#f0d99f] bg-[#fffdf4] p-5 text-center"><div className="text-lg font-black text-[#ed7416]">💡 ไม่ต้องสมบูรณ์แบบก็ได้นะคะ</div><p className="mt-1 font-semibold text-[#56675d]">แค่บอกสิ่งที่เป็นตัวคุณตอนนี้ โค้ชจะช่วยแนะนำแนวทางที่เหมาะกับคุณที่สุดค่ะ 💗</p></div></section>
+<section className="mt-8 bg-gradient-to-r from-[#ffae13] via-[#ff8a17] to-[#f06b17] text-white"><div className="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-5 px-5 py-10 text-center md:flex-row md:px-8 md:text-left"><div><h2 className="text-3xl font-black md:text-4xl">เริ่มต้นดูแลสุขภาพของคุณ<br/>ได้ตั้งแต่วันนี้</h2><p className="mt-2 font-semibold">ใช้เวลาเพียง 5–7 นาที เพื่อเริ่มต้นรู้จักตัวเองมากขึ้น</p></div><Link href="/assessment" className="inline-flex items-center gap-3 rounded-full bg-[#0b6647] px-8 py-4 text-lg font-black text-white shadow-xl">เริ่มประเมินสุขภาพฟรี <ArrowRight/></Link></div></section>
+<footer id="contact" className="bg-[#075137] text-white"><div className="mx-auto grid max-w-[1280px] gap-8 px-5 py-10 md:grid-cols-3 md:px-8"><div><div className="text-2xl font-black">Health Journey</div><div className="mt-1 text-sm text-[#d7ead7]">by Nook Health Coach</div><p className="mt-4 max-w-sm text-sm leading-6 text-white/80">เราเชื่อว่าการดูแลสุขภาพ เริ่มต้นจากความเข้าใจตัวเอง และใช้ข้อมูลของคุณเพื่อช่วยมองภาพรวมอย่างเป็นส่วนตัว</p></div><div><h3 className="font-black">ติดตามเรา</h3><div className="mt-4 flex gap-3"><a href={FACEBOOK_URL} target="_blank" rel="noreferrer" aria-label="Facebook" className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20"><Facebook size={21}/></a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Instagram" className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20"><Instagram size={21}/></a><a href={LINE_URL} target="_blank" rel="noreferrer" aria-label="LINE" className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20"><MessageCircle size={21}/></a></div><div className="mt-3 text-sm text-white/75">Facebook • Health Journey<br/>Instagram • @healthjourneybyfg4u</div></div><div><div className="flex items-center gap-3 text-lg font-black"><ShieldCheck/> ข้อมูลของคุณปลอดภัย 100%</div><p className="mt-3 text-sm leading-6 text-white/75">การประเมินนี้เป็นการประเมินสุขภาพเบื้องต้น ไม่ใช่การวินิจฉัยโรค และไม่ควรใช้แทนคำแนะนำจากแพทย์ โดยเฉพาะเรื่องยาและการรักษา</p></div></div><div className="border-t border-white/10 py-5 text-center text-xs text-white/60">© 2026 Health Journey by Nook Health Coach. All rights reserved.</div></footer>
+</main>}
