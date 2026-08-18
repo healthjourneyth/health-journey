@@ -1,90 +1,105 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { ArrowLeft, Heart, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CheckCircle2, HeartPulse, ShieldCheck, Sparkles } from 'lucide-react';
 
-const CASES = Array.from({ length: 10 }, (_, i) => `review-case-${String(i + 1).padStart(2, '0')}.webp`);
-
-async function loadReviewImages() {
-  const response = await fetch('/review-cases.tar.gz', { cache: 'no-store' });
-  if (!response.ok) throw new Error('โหลดภาพรีวิวไม่สำเร็จ');
-  const compressed = await response.arrayBuffer();
-  const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
-  const bytes = new Uint8Array(await new Response(stream).arrayBuffer());
-  const result = new Map<string, string>();
-  let offset = 0;
-  while (offset + 512 <= bytes.length) {
-    const header = bytes.slice(offset, offset + 512);
-    if (header.every((v) => v === 0)) break;
-    const name = new TextDecoder().decode(header.slice(0, 100)).replace(/\0.*$/, '');
-    const sizeText = new TextDecoder().decode(header.slice(124, 136)).replace(/\0.*$/, '').trim();
-    const size = parseInt(sizeText || '0', 8) || 0;
-    offset += 512;
-    const data = bytes.slice(offset, offset + size);
-    if (name) result.set(name, URL.createObjectURL(new Blob([data], { type: 'image/webp' })));
-    offset += Math.ceil(size / 512) * 512;
-  }
-  return result;
-}
+const groups = [
+  {
+    id: '50plus',
+    eyebrow: 'AGE 50+ & 60+',
+    title: 'รีวิวการเปลี่ยนแปลงในวัย 50+',
+    description: 'เคสที่ผู้รีวิวรายงานการเปลี่ยนแปลงของน้ำหนัก รอบเอว และความรู้สึกต่อสุขภาพในชีวิตประจำวัน',
+    cases: [
+      { image: '/reviews/review-60plus-5kg-4months.webp', tag: 'วัย 60+', headline: '4 เดือน ลด 5 กก.', detail: '71 → 66 กก. • รอบเอวลด 8 ซม.', notes: ['ปวดเข่าลดลง', 'ใส่เสื้อผ้าชุดเก่าได้สบายขึ้น'] },
+      { image: '/reviews/review-50plus-19kg-6months.webp', tag: 'วัย 50+', headline: '6 เดือน ลด 19 กก.', detail: '67 → 48 กก.', notes: ['รายงานว่าภูมิแพ้ดีขึ้น', 'ไมเกรนลดลง', 'สุขภาพดีขึ้น'] },
+      { image: '/reviews/review-50-27kg-8months.webp', tag: 'วัย 50', headline: '8 เดือน ลด 27 กก.', detail: '85 → 58.5 กก.', notes: ['รายงานว่าค่าเบาหวานดีขึ้น', 'มั่นใจขึ้น', 'อาการปวดเมื่อยตามตัวลดลง'] },
+      { image: '/reviews/review-60plus-11kg-3months.webp', tag: 'วัย 60+', headline: '3 เดือน ลด 11 กก.', detail: '72 → 61 กก.', notes: ['รายงานว่าเลิกนอนกรน', 'รายงานว่าลดยาบางรายการ', 'เค้กลดลง'] },
+    ],
+  },
+  {
+    id: 'younger',
+    eyebrow: 'AGE 20–40',
+    title: 'รีวิวจากคนอายุน้อยกว่า 50',
+    description: 'ผลลัพธ์ที่ผู้รีวิวรายงานในวัยทำงาน ตั้งแต่การเปลี่ยนน้ำหนักไปจนถึงความมั่นใจและการใช้ชีวิต',
+    cases: [
+      { image: '/reviews/review-20plus-30kg-7months.webp', tag: 'วัย 20+', headline: '7 เดือน ลด 30.1 กก.', detail: '123.5 → 93.4 กก.', notes: ['มั่นใจขึ้น', 'กินเป็นมื้อได้ดีขึ้น', 'ใช้ชีวิตง่ายขึ้น'] },
+      { image: '/reviews/review-30plus-10kg-3months.webp', tag: 'วัย 30+', headline: '3 เดือน ลดประมาณ 9–10 กก.', detail: '72++ → 63 กก.', notes: ['รายงานว่าสุขภาพดีขึ้น', 'วิ่งออกกำลังกายได้นานขึ้น'] },
+    ],
+  },
+  {
+    id: 'conditions',
+    eyebrow: 'HEALTH CONDITIONS',
+    title: 'เคสเบาหวาน • ความดัน • โรคประจำตัว',
+    description: 'แยกหมวดสำหรับเคสที่ภาพรีวิวระบุถึงค่าตรวจ สุขภาพ หรือการใช้ยาร่วมด้วย',
+    cases: [
+      { image: '/reviews/review-diabetes-80to69-3months.webp', tag: 'วัยใกล้ 50', headline: '3 เดือน 80 → 69 กก.', detail: 'น้ำตาลสะสม 6.5 → 5.4 • ไตรกลีเซอไรด์ 370 → 127', notes: ['ภาพระบุว่าไม่ได้ออกกำลังกาย', 'กินเหมือนเดิมตามข้อความในภาพ'] },
+      { image: '/reviews/review-bp-6kg-2months.webp', tag: 'วัย 50+', headline: '2 เดือน ลด 6 กก.', detail: 'ภาพระบุว่าความดันดีขึ้นจนหมอปรับลดยา', notes: ['อารมณ์ดีขึ้น', 'ไม่หงุดหงิดง่าย', 'สุขภาพดีขึ้น', 'ข้อความรีวิวระบุว่าเคยกินยาความดันต่อเนื่อง 13 ปี'] },
+      { image: '/reviews/review-diabetes-107to97-4months.webp', tag: 'วัยใกล้ 70', headline: '4 เดือน ลด 10 กก.', detail: '107 → 97 กก. • น้ำตาลสะสม 6.2 → 5.5', notes: ['ภาพระบุว่าเบาหวานสงบ', 'ภาพระบุว่าหมอปรับลดยา'] },
+    ],
+  },
+];
 
 export default function ReviewsPage() {
-  const [images, setImages] = useState<Map<string, string>>(new Map());
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-    let urls: string[] = [];
-    loadReviewImages().then((map) => {
-      if (!active) return;
-      urls = Array.from(map.values());
-      setImages(map);
-    }).catch(() => setError(true));
-    return () => {
-      active = false;
-      urls.forEach((url) => URL.revokeObjectURL(url));
-    };
-  }, []);
-
   return (
-    <main className="min-h-screen bg-[#fffaf0] text-[#193f31]">
-      <header className="sticky top-0 z-20 border-b border-[#efdcb3] bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-[1280px] items-center justify-between px-5 py-3 md:px-8 md:py-4">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#fff4cf] ring-1 ring-[#e4c979]"><Heart size={22} className="fill-[#ffd35a] text-[#4c8b48]" /></div>
-            <div><div className="text-xl font-black text-[#145b3f]">Health Journey</div><div className="text-xs font-semibold text-[#bd7118]">by Nook Health Coach</div></div>
-          </Link>
-          <Link href="/" className="inline-flex items-center gap-2 rounded-full border border-[#e8d8b7] bg-white px-4 py-2 text-sm font-black text-[#286047]"><ArrowLeft size={17}/> กลับหน้าหลัก</Link>
-        </div>
-      </header>
-
-      <section className="bg-gradient-to-br from-[#fff3c7] via-[#fffaf0] to-[#e7f4dc]">
-        <div className="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-16">
+    <main className="min-h-screen bg-[#fffdf7] text-[#183e31]">
+      <section className="relative overflow-hidden bg-[radial-gradient(circle_at_12%_8%,#fff0a9,transparent_28%),radial-gradient(circle_at_88%_12%,#dff2c9,transparent_30%),linear-gradient(135deg,#fffdf7_0%,#f4f8e9_100%)]">
+        <div className="absolute -right-20 top-20 h-72 w-72 rounded-full bg-[#b8d86b]/20 blur-3xl" />
+        <div className="absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-[#f6bf55]/15 blur-3xl" />
+        <div className="relative mx-auto max-w-[1280px] px-5 py-14 md:px-8 md:py-20">
           <div className="max-w-4xl">
-            <div className="text-sm font-black tracking-[0.2em] text-[#f28a1b]">FEEL GREAT REVIEW</div>
-            <h1 className="mt-3 text-4xl font-black leading-tight text-[#145b3f] md:text-6xl">10 เคสรีวิวจริง<br/><span className="text-[#ef7117]">จากภาพรีวิวเดิม</span></h1>
-            <p className="mt-5 max-w-3xl text-lg font-semibold leading-8 text-[#53675d]">ปรับเฉพาะกรอบและการจัดวางให้ดูสะอาดขึ้น โดยคงภาพ ชุด คน และข้อความในรีวิวเดิมไว้ ไม่เติมข้อความลงบนภาพรีวิว</p>
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-black tracking-[0.18em] text-[#d4771a] ring-1 ring-[#eadfbe]"><Sparkles size={16}/> FEEL GREAT REVIEW</div>
+            <h1 className="mt-5 text-4xl font-black leading-[1.05] tracking-tight text-[#15593d] md:text-6xl">ผลลัพธ์ที่ผู้ใช้<br/><span className="text-[#ef7417]">รายงานจากประสบการณ์จริง</span></h1>
+            <p className="mt-5 max-w-3xl text-lg font-medium leading-8 text-[#596b61] md:text-xl">รวมเคสรีวิวที่นุกเก็บไว้สำหรับเว็บไซต์ แยกตามช่วงอายุและประเด็นสุขภาพ เพื่อให้ดูง่ายและเห็นความหลากหลายของแต่ละเคส</p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link href="#50plus" className="rounded-full bg-[#176646] px-5 py-3 text-sm font-black text-white shadow-lg">วัย 50+</Link>
+              <Link href="#younger" className="rounded-full bg-white px-5 py-3 text-sm font-black text-[#176646] ring-1 ring-[#dfe6d7]">วัย 20–40</Link>
+              <Link href="#conditions" className="rounded-full bg-white px-5 py-3 text-sm font-black text-[#176646] ring-1 ring-[#dfe6d7]">เบาหวาน / ความดัน</Link>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-5 py-10 md:px-8 md:py-14">
-        {error ? <div className="rounded-3xl bg-white p-8 text-center font-bold text-[#9a4c2d] ring-1 ring-[#eadfc9]">กำลังเตรียมภาพรีวิว กรุณารีเฟรชหน้านี้อีกครั้งค่ะ</div> : null}
-        <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-          {CASES.map((name, index) => {
-            const src = images.get(name);
-            return <article key={name} className="overflow-hidden rounded-[30px] bg-white p-3 shadow-lg ring-1 ring-[#eadfc9]">
-              <div className="overflow-hidden rounded-[24px] bg-[#fffaf0]">
-                {src ? <img src={src} alt={`Feel Great review case ${index + 1}`} className="block h-auto w-full" /> : <div className="aspect-square animate-pulse bg-[#f3ead7]" />}
-              </div>
-            </article>;
-          })}
+      {groups.map((group) => (
+        <section key={group.id} id={group.id} className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-12 md:px-8 md:py-16">
+          <div className="mb-8 max-w-3xl">
+            <div className="text-xs font-black tracking-[0.2em] text-[#d4771a]">{group.eyebrow}</div>
+            <h2 className="mt-2 text-3xl font-black text-[#15593d] md:text-4xl">{group.title}</h2>
+            <p className="mt-2 text-base font-medium leading-7 text-[#68776f]">{group.description}</p>
+          </div>
+          <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+            {group.cases.map((item) => (
+              <article key={item.image} className="group overflow-hidden rounded-[30px] bg-white shadow-[0_18px_50px_rgba(46,76,49,.10)] ring-1 ring-[#e7e0cd] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(46,76,49,.14)]">
+                <div className="relative overflow-hidden bg-[#f4f2e7]">
+                  <img src={item.image} alt={`${item.tag} ${item.headline}`} className="block aspect-square w-full object-cover transition duration-500 group-hover:scale-[1.015]" loading="lazy" />
+                </div>
+                <div className="p-5 md:p-6">
+                  <div className="inline-flex rounded-full bg-[#eff6e5] px-3 py-1 text-xs font-black text-[#4d7d36]">{item.tag}</div>
+                  <h3 className="mt-3 text-2xl font-black leading-tight text-[#17583d]">{item.headline}</h3>
+                  <p className="mt-2 font-bold text-[#d87517]">{item.detail}</p>
+                  <ul className="mt-4 space-y-2 text-sm font-semibold leading-6 text-[#5f6d65]">{item.notes.map((note) => <li key={note} className="flex gap-2"><CheckCircle2 size={18} className="mt-0.5 shrink-0 text-[#78a33c]"/>{note}</li>)}</ul>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <section className="mx-auto max-w-[1280px] px-5 pb-12 md:px-8 md:pb-16">
+        <div className="rounded-[34px] bg-[#15593d] p-7 text-white shadow-xl md:p-10">
+          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <div className="flex items-center gap-2 text-[#ffe08b]"><ShieldCheck size={20}/><span className="text-sm font-black tracking-[0.15em]">ใช้ข้อมูลอย่างรับผิดชอบ</span></div>
+              <h2 className="mt-3 text-2xl font-black md:text-3xl">รีวิวแต่ละเคสเป็นประสบการณ์ของผู้รีวิว</h2>
+              <p className="mt-3 max-w-3xl text-sm font-medium leading-7 text-white/80">ข้อมูล น้ำหนัก ค่าตรวจ อาการ และการเปลี่ยนแปลงเรื่องยา เป็นข้อมูลตามภาพรีวิวที่ผู้ใช้ส่งมา ไม่ใช่การรับรองผลลัพธ์ทางการแพทย์ และผลลัพธ์ของแต่ละคนอาจแตกต่างกัน</p>
+            </div>
+            <Link href="/assessment" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#f28a1b] px-6 py-4 text-base font-black text-white shadow-lg">ประเมินสุขภาพของฉัน <ArrowRight size={19}/></Link>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-5 pb-12 md:px-8 md:pb-16">
-        <div className="rounded-[30px] bg-[#17583d] p-6 text-white md:p-8">
-          <div className="flex items-start gap-3"><ShieldCheck className="mt-1 shrink-0 text-[#ffd35a]"/><div><div className="text-xl font-black">ภาพรีวิวเดิม • จัดวางใหม่เท่านั้น</div><div className="mt-1 text-sm font-semibold leading-6 text-white/80">ไม่เพิ่มคำ ไม่เปลี่ยนคน ไม่สร้าง Before/After ใหม่ และไม่แต่งผลลัพธ์จากรีวิวเดิม</div></div></div>
+      <section className="mx-auto max-w-[1280px] px-5 pb-16 md:px-8">
+        <div className="rounded-[30px] border border-[#eadfbe] bg-[#fffaf0] p-6 md:p-8">
+          <div className="flex gap-3"><HeartPulse className="mt-1 shrink-0 text-[#d97718]"/><div><h2 className="font-black text-[#15593d]">สิ่งสำคัญกว่าตัวเลข คือการเดินทางของแต่ละคน</h2><p className="mt-2 text-sm font-medium leading-7 text-[#65736b]">Health Journey ใช้แนวคิด Health Coach ชวนดูภาพรวมของสุขภาพและพฤติกรรม แล้วค่อย ๆ เลือกจุดเริ่มต้นที่เหมาะกับแต่ละคน</p></div></div>
         </div>
       </section>
     </main>
