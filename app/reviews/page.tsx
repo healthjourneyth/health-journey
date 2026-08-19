@@ -3,127 +3,30 @@
 import Link from 'next/link';
 import { CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
-type ReviewItem = {
-  image: string;
-  tag: string;
-  headline: string;
-  detail: string;
-  notes: string[];
-};
+type ReviewItem={image:string;tag:string;headline:string;detail:string;notes:string[]};
 
-const groups: { id: string; eyebrow: string; title: string; description: string; cases: ReviewItem[] }[] = [
-  {
-    id: '40plus',
-    eyebrow: 'AGE 40+ & 45+',
-    title: 'รีวิวการเปลี่ยนแปลงในวัย 40+',
-    description: 'รวม 3 เคสรีวิววัย 40+ ที่นุกเลือกเก็บไว้ใช้บนเว็บไซต์ โดย 1 คน = 1 รีวิว = 1 ภาพรีวิวเต็มภาพ',
-    cases: [
-      { image: '/reviews/assets/40plus-5kg-2months.webp', tag: 'วัย 40+', headline: '2 เดือน ลด 5 กก.', detail: '67 → 62 กก.', notes: ['รายงานว่าไมเกรนดีขึ้น', 'เหนื่อยเพลียระหว่างวันลดลง', 'อาการภูมิแพ้ลดลง'] },
-      { image: '/reviews/assets/40plus-5kg-1month.webp', tag: 'วัย 40+', headline: '1 เดือน ลด 5 กก.', detail: '51 → 46 กก.', notes: ['อาการกินจุกจิกลดลง', 'หลับดีขึ้น', 'ความเครียดลดลง'] },
-      { image: '/reviews/assets/45plus-6kg-3months.webp', tag: 'วัย 45+', headline: '3 เดือน ลด 6 กก.', detail: '49 → 43 กก.', notes: ['มั่นใจขึ้น', 'รอบเอวหายไป 4 นิ้ว', 'อาการเหนื่อยเพลียง่ายลดลง'] },
-    ],
-  },
-  {
-    id: '50plus',
-    eyebrow: 'AGE 50+ & 60+',
-    title: 'รีวิวการเปลี่ยนแปลงในวัย 50+',
-    description: 'เคสที่ผู้รีวิวรายงานการเปลี่ยนแปลงของน้ำหนัก รอบเอว และความรู้สึกต่อสุขภาพในชีวิตประจำวัน',
-    cases: [
-      { image: '/reviews/assets/review-60plus-5kg-4months.webp', tag: 'วัย 60+', headline: '4 เดือน ลด 5 กก.', detail: '71 → 66 กก. • รอบเอวลด 8 ซม.', notes: ['ปวดเข่าลดลง', 'ใส่เสื้อผ้าชุดเก่าได้สบายขึ้น'] },
-      { image: '/reviews/assets/review-50plus-19kg-6months.webp', tag: 'วัย 50+', headline: '6 เดือน ลด 19 กก.', detail: '67 → 48 กก.', notes: ['รายงานว่าภูมิแพ้ดีขึ้น', 'ไมเกรนลดลง', 'สุขภาพดีขึ้น'] },
-      { image: '/reviews/assets/review-50-27kg-8months.webp', tag: 'วัย 50', headline: '8 เดือน ลด 27 กก.', detail: '85 → 58.5 กก.', notes: ['รายงานว่าค่าเบาหวานดีขึ้น', 'มั่นใจขึ้น', 'อาการปวดเมื่อยตามตัวลดลง'] },
-      { image: '/reviews/assets/review-60plus-11kg-3months.webp', tag: 'วัย 60+', headline: '3 เดือน ลด 11 กก.', detail: '72 → 61 กก.', notes: ['รายงานว่าเลิกนอนกรน', 'รายงานว่าลดยาบางรายการ', 'เค้กลดลง'] },
-    ],
-  },
-  {
-    id: 'younger',
-    eyebrow: 'AGE 20–40',
-    title: 'รีวิวจากคนอายุน้อยกว่า 50',
-    description: 'ผลลัพธ์ที่ผู้รีวิวรายงานในวัยทำงาน ตั้งแต่การเปลี่ยนน้ำหนักไปจนถึงความมั่นใจและการใช้ชีวิต',
-    cases: [
-      { image: '/reviews/assets/review-20plus-30kg-7months.webp', tag: 'วัย 20+', headline: '7 เดือน ลด 30.1 กก.', detail: '123.5 → 93.4 กก.', notes: ['มั่นใจขึ้น', 'กินเป็นมื้อได้ดีขึ้น', 'ใช้ชีวิตง่ายขึ้น'] },
-      { image: '/reviews/assets/review-30plus-10kg-3months.webp', tag: 'วัย 30+', headline: '3 เดือน ลดประมาณ 9–10 กก.', detail: '72++ → 63 กก.', notes: ['รายงานว่าสุขภาพดีขึ้น', 'วิ่งออกกำลังกายได้นานขึ้น'] },
-    ],
-  },
-  {
-    id: 'conditions',
-    eyebrow: 'HEALTH CONDITIONS',
-    title: 'เคสเบาหวาน • ความดัน • โรคประจำตัว',
-    description: 'แยกหมวดสำหรับเคสที่ภาพรีวิวระบุถึงค่าตรวจ สุขภาพ หรือการใช้ยาร่วมด้วย',
-    cases: [
-      { image: '/reviews/assets/review-diabetes-80to69-3months.webp', tag: 'วัยใกล้ 50', headline: '3 เดือน 80 → 69 กก.', detail: 'น้ำตาลสะสม 6.5 → 5.4 • ไตรกลีเซอไรด์ 370 → 127', notes: ['ภาพระบุว่าไม่ได้ออกกำลังกาย', 'กินเหมือนเดิมตามข้อความในภาพ'] },
-      { image: '/reviews/assets/review-bp-6kg-2months.webp', tag: 'วัย 50+', headline: '2 เดือน ลด 6 กก.', detail: 'ภาพระบุว่าความดันดีขึ้นจนหมอปรับลดยา', notes: ['อารมณ์ดีขึ้น', 'ไม่หงุดหงิดง่าย', 'สุขภาพดีขึ้น', 'ข้อความรีวิวระบุว่าเคยกินยาความดันต่อเนื่อง 13 ปี'] },
-      { image: '/reviews/assets/review-diabetes-107to97-4months.webp', tag: 'วัยใกล้ 70', headline: '4 เดือน ลด 10 กก.', detail: '107 → 97 กก. • น้ำตาลสะสม 6.2 → 5.5', notes: ['ภาพระบุว่าเบาหวานสงบ', 'ภาพระบุว่าหมอปรับลดยา'] },
-    ],
-  },
+const groups:{id:string;title:string;cases:ReviewItem[]}[]=[
+{id:'40plus',title:'รีวิว 40+',cases:[
+{image:'/reviews/assets/40plus-5kg-2months.webp',tag:'วัย 40+',headline:'2 เดือน ลด 5 กก.',detail:'67 → 62 กก.',notes:['ไมเกรนดีขึ้น','เหนื่อยเพลียระหว่างวันลดลง','อาการภูมิแพ้ลดลง']},
+{image:'/reviews/assets/40plus-5kg-1month.webp',tag:'วัย 40+',headline:'1 เดือน ลด 5 กก.',detail:'51 → 46 กก.',notes:['อาการกินจุกจิกลดลง','หลับดีขึ้น','ความเครียดลดลง']},
+{image:'/reviews/assets/45plus-6kg-3months.webp',tag:'วัย 45+',headline:'3 เดือน ลด 6 กก.',detail:'49 → 43 กก.',notes:['มั่นใจขึ้น','รอบเอวหายไป 4 นิ้ว','อาการเหนื่อยเพลียง่ายลดลง']}]},
+{id:'50plus',title:'รีวิว 50+',cases:[
+{image:'/reviews/assets/review-60plus-5kg-4months.webp',tag:'วัย 60+',headline:'4 เดือน ลด 5 กก.',detail:'71 → 66 กก. • รอบเอวลด 8 ซม.',notes:['ปวดเข่าลดลง','ใส่เสื้อผ้าชุดเก่าได้สบายขึ้น']},
+{image:'/reviews/assets/review-50plus-19kg-6months.webp',tag:'วัย 50+',headline:'6 เดือน ลด 19 กก.',detail:'67 → 48 กก.',notes:['ภูมิแพ้ดีขึ้น','ไมเกรนลดลง','สุขภาพดีขึ้น']},
+{image:'/reviews/assets/review-50-27kg-8months.webp',tag:'วัย 50',headline:'8 เดือน ลด 27 กก.',detail:'85 → 58.5 กก.',notes:['ค่าเบาหวานดีขึ้น','มั่นใจขึ้น','อาการปวดเมื่อยตามตัวลดลง']},
+{image:'/reviews/assets/review-60plus-11kg-3months.webp',tag:'วัย 60+',headline:'3 เดือน ลด 11 กก.',detail:'72 → 61 กก.',notes:['เลิกนอนกรน','ลดยาบางรายการ']}]},
+{id:'younger',title:'รีวิววัยรุ่น',cases:[
+{image:'/reviews/assets/review-20plus-30kg-7months.webp',tag:'วัย 20+',headline:'7 เดือน ลด 30.1 กก.',detail:'123.5 → 93.4 กก.',notes:['มั่นใจขึ้น','กินเป็นมื้อได้ดีขึ้น','ใช้ชีวิตง่ายขึ้น']},
+{image:'/reviews/assets/review-30plus-10kg-3months.webp',tag:'วัย 30+',headline:'3 เดือน ลดประมาณ 9–10 กก.',detail:'72++ → 63 กก.',notes:['สุขภาพดีขึ้น','วิ่งออกกำลังกายได้นานขึ้น']}]},
+{id:'conditions',title:'รีวิว เบาหวาน ความดัน โรคประจำตัว',cases:[
+{image:'/reviews/assets/review-diabetes-80to69-3months.webp',tag:'วัยใกล้ 50',headline:'3 เดือน 80 → 69 กก.',detail:'น้ำตาลสะสม 6.5 → 5.4 • ไตรกลีเซอไรด์ 370 → 127',notes:['ไม่ได้ออกกำลังกาย','กินเหมือนเดิม']},
+{image:'/reviews/assets/review-bp-6kg-2months.webp',tag:'วัย 50+',headline:'2 เดือน ลด 6 กก.',detail:'ความดันดีขึ้นจนหมอปรับลดยา',notes:['อารมณ์ดีขึ้น','ไม่หงุดหงิดง่าย','สุขภาพดีขึ้น','เคยกินยาความดันต่อเนื่อง 13 ปี']},
+{image:'/reviews/assets/review-diabetes-107to97-4months.webp',tag:'วัยใกล้ 70',headline:'4 เดือน ลด 10 กก.',detail:'107 → 97 กก. • น้ำตาลสะสม 6.2 → 5.5',notes:['เบาหวานสงบ','หมอปรับลดยา']}]}
 ];
 
-function ReviewVisual({ item }: { item: ReviewItem }) {
-  return (
-    <div className="bg-[#f4f2e7]">
-      <img
-        src={item.image}
-        alt={`${item.tag} ${item.headline}`}
-        className="block aspect-square w-full object-cover"
-        loading="lazy"
-      />
-    </div>
-  );
-}
+function ReviewVisual({item}:{item:ReviewItem}){return <div className="bg-[#f4f2e7]"><img src={item.image} alt={`${item.tag} ${item.headline}`} className="block aspect-square w-full object-cover" loading="lazy" /></div>}
 
-export default function ReviewsPage() {
-  return (
-    <main className="min-h-screen bg-[#fffdf7] text-[#183e31]">
-      <section className="relative overflow-hidden bg-[radial-gradient(circle_at_12%_8%,#fff0a9,transparent_28%),radial-gradient(circle_at_88%_12%,#dff2c9,transparent_30%),linear-gradient(135deg,#fffdf7_0%,#f4f8e9_100%)]">
-        <div className="absolute -right-20 top-20 h-72 w-72 rounded-full bg-[#b8d86b]/20 blur-3xl" />
-        <div className="absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-[#f6bf55]/15 blur-3xl" />
-        <div className="relative mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-16">
-          <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-black tracking-[0.18em] text-[#d4771a] ring-1 ring-[#eadfbe]"><Sparkles size={16} /> FEEL GREAT REVIEW</div>
-            <h1 className="mt-5 text-4xl font-black leading-[1.05] tracking-tight text-[#15593d] md:text-6xl">ผลลัพธ์ที่ผู้ใช้<br /><span className="text-[#ef7417]">รายงานจากประสบการณ์จริง</span></h1>
-            <p className="mt-5 max-w-3xl text-lg font-medium leading-8 text-[#596b61] md:text-xl">รวมภาพรีวิวที่นุกเลือกเก็บไว้สำหรับเว็บไซต์ โดยแยกตามช่วงอายุและประเด็นสุขภาพ และแสดงภาพรีวิวของแต่ละคนแบบเต็มภาพ ไม่รวมหลายคนไว้ในรูปเดียว</p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="#40plus" className="rounded-full bg-[#176646] px-5 py-3 text-sm font-black text-white shadow-lg">วัย 40+</Link>
-              <Link href="#50plus" className="rounded-full bg-white px-5 py-3 text-sm font-black text-[#176646] ring-1 ring-[#dfe6d7]">วัย 50+</Link>
-              <Link href="#younger" className="rounded-full bg-white px-5 py-3 text-sm font-black text-[#176646] ring-1 ring-[#dfe6d7]">วัย 20–40</Link>
-              <Link href="#conditions" className="rounded-full bg-white px-5 py-3 text-sm font-black text-[#176646] ring-1 ring-[#dfe6d7]">เบาหวาน / ความดัน</Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {groups.map((group) => (
-        <section key={group.id} id={group.id} className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-12 md:px-8 md:py-16">
-          <div className="mb-8 max-w-3xl">
-            <div className="text-xs font-black tracking-[0.2em] text-[#d4771a]">{group.eyebrow}</div>
-            <h2 className="mt-2 text-3xl font-black text-[#15593d] md:text-4xl">{group.title}</h2>
-            <p className="mt-2 text-base font-medium leading-7 text-[#68776f]">{group.description}</p>
-          </div>
-          <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-            {group.cases.map((item) => (
-              <article key={item.image} className="overflow-hidden rounded-[30px] bg-white shadow-[0_18px_50px_rgba(46,76,49,.10)] ring-1 ring-[#e7e0cd]">
-                <ReviewVisual item={item} />
-                <div className="p-5 md:p-6">
-                  <div className="inline-flex rounded-full bg-[#eff6e5] px-3 py-1 text-xs font-black text-[#4d7d36]">{item.tag}</div>
-                  <h3 className="mt-3 text-2xl font-black leading-tight text-[#17583d]">{item.headline}</h3>
-                  <p className="mt-2 font-bold text-[#d87517]">{item.detail}</p>
-                  <ul className="mt-4 space-y-2 text-sm font-semibold leading-6 text-[#5f6d65]">
-                    {item.notes.map((note) => <li key={note} className="flex gap-2"><CheckCircle2 size={18} className="mt-0.5 shrink-0 text-[#78a33c]" />{note}</li>)}
-                  </ul>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      ))}
-
-      <section className="mx-auto max-w-[1280px] px-5 pb-12 md:px-8 md:pb-16">
-        <div className="rounded-[34px] bg-[#15593d] p-7 text-white shadow-xl md:p-10">
-          <div className="flex items-center gap-2 text-[#ffe08b]"><ShieldCheck size={20} /><span className="text-sm font-black tracking-[0.15em]">ใช้ข้อมูลอย่างรับผิดชอบ</span></div>
-          <h2 className="mt-3 text-2xl font-black md:text-3xl">รีวิวแต่ละเคสเป็นประสบการณ์ของผู้รีวิว</h2>
-          <p className="mt-3 max-w-3xl text-sm font-medium leading-7 text-white/80">ข้อมูล น้ำหนัก ค่าตรวจ อาการ และการเปลี่ยนแปลงเรื่องยา เป็นข้อมูลตามภาพรีวิวที่ผู้ใช้ส่งมา ไม่ใช่การรับรองผลลัพธ์ทางการแพทย์ และผลลัพธ์ของแต่ละคนอาจแตกต่างกัน</p>
-        </div>
-      </section>
-    </main>
-  );
-}
+export default function ReviewsPage(){return <main className="min-h-screen bg-[#fffdf7] text-[#183e31]">
+<section className="relative overflow-hidden bg-[radial-gradient(circle_at_12%_8%,#fff0a9,transparent_28%),radial-gradient(circle_at_88%_12%,#dff2c9,transparent_30%),linear-gradient(135deg,#fffdf7_0%,#f4f8e9_100%)]"><div className="relative mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-16"><div className="max-w-4xl"><div className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-black tracking-[0.18em] text-[#d4771a] ring-1 ring-[#eadfbe]"><Sparkles size={16}/> FEEL GREAT REVIEW</div><h1 className="mt-5 text-4xl font-black leading-[1.05] tracking-tight text-[#15593d] md:text-6xl">ผลลัพธ์ที่ผู้ใช้<br/><span className="text-[#ef7417]">รายงานจากประสบการณ์จริง</span></h1><p className="mt-5 max-w-3xl text-lg font-medium leading-8 text-[#596b61] md:text-xl">เรื่องราวการเปลี่ยนแปลงจากผู้ใช้จริง</p><div className="mt-7 flex flex-wrap gap-3"><Link href="#40plus" className="rounded-full bg-[#176646] px-5 py-3 text-sm font-black text-white shadow-lg">รีวิว 40+</Link><Link href="#50plus" className="rounded-full bg-white px-5 py-3 text-sm font-black text-[#176646] ring-1 ring-[#dfe6d7]">รีวิว 50+</Link><Link href="#younger" className="rounded-full bg-white px-5 py-3 text-sm font-black text-[#176646] ring-1 ring-[#dfe6d7]">รีวิววัยรุ่น</Link><Link href="#conditions" className="rounded-full bg-white px-5 py-3 text-sm font-black text-[#176646] ring-1 ring-[#dfe6d7]">รีวิว เบาหวาน ความดัน</Link></div></div></div></section>
+{groups.map(group=><section key={group.id} id={group.id} className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-12 md:px-8 md:py-16"><div className="mb-8"><h2 className="text-3xl font-black text-[#15593d] md:text-4xl">{group.title}</h2></div><div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">{group.cases.map(item=><article key={item.image} className="overflow-hidden rounded-[30px] bg-white shadow-[0_18px_50px_rgba(46,76,49,.10)] ring-1 ring-[#e7e0cd]"><ReviewVisual item={item}/><div className="p-5 md:p-6"><div className="inline-flex rounded-full bg-[#eff6e5] px-3 py-1 text-xs font-black text-[#4d7d36]">{item.tag}</div><h3 className="mt-3 text-2xl font-black leading-tight text-[#17583d]">{item.headline}</h3><p className="mt-2 font-bold text-[#d87517]">{item.detail}</p><ul className="mt-4 space-y-2 text-sm font-semibold leading-6 text-[#5f6d65]">{item.notes.map(note=><li key={note} className="flex gap-2"><CheckCircle2 size={18} className="mt-0.5 shrink-0 text-[#78a33c]"/>{note}</li>)}</ul></div></article>)}</div></section>)}
+<section className="mx-auto max-w-[1280px] px-5 pb-12 md:px-8 md:pb-16"><div className="rounded-[34px] bg-[#15593d] p-7 text-white shadow-xl md:p-10"><div className="flex items-center gap-2 text-[#ffe08b]"><ShieldCheck size={20}/><span className="text-sm font-black tracking-[0.15em]">ใช้ข้อมูลอย่างรับผิดชอบ</span></div><p className="mt-3 max-w-3xl text-sm font-medium leading-7 text-white/80">ข้อมูลในรีวิวเป็นประสบการณ์ของผู้รีวิวแต่ละราย ผลลัพธ์ของแต่ละคนอาจแตกต่างกัน</p></div></section></main>}
