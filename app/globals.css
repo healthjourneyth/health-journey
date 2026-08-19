@@ -2,3 +2,5 @@
 @import "tailwindcss";
 :root{--green:#3f7651;--green2:#6d9b55;--lime:#b9d47b;--gold:#c89635;--cream:#fbf8ef;--ink:#3d4038;--muted:#78847b;--line:#e9dfc8}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:'Anuphan','Noto Sans Thai','Leelawadee UI',sans-serif;-webkit-font-smoothing:antialiased}button,a{font:inherit}button{cursor:pointer}.soft{box-shadow:0 14px 40px rgba(55,75,58,.08)}
+/* Hero image: use the official Unicity Unimate woman-with-cup visual as the visual direction requested for Health Journey. */
+img[alt="ผู้หญิงยิ้มถือเครื่องดื่มเพื่อสุขภาพในบรรยากาศสดใส"]{content:url('https://s3.us-east-1.amazonaws.com/lunar-assets.unicity.com/PRI/content_images/a4ad76725ce346278b08abb8811c4142/assets2Fe8e2c458bcdd488f8b868aefba1dbfd9.webp');object-position:center center}
