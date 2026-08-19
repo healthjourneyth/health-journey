@@ -1,6 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
 @import "tailwindcss";
-:root{--green:#3f7651;--green2:#6d9b55;--lime:#b9d47b;--gold:#c89635;--cream:#fbf8ef;--ink:#3d4038;--muted:#78847b;--line:#e9dfc8}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:'Anuphan','Noto Sans Thai','Leelawadee UI',sans-serif;-webkit-font-smoothing:antialiased}button,a{font:inherit}button{cursor:pointer}.soft{box-shadow:0 14px 40px rgba(55,75,58,.08)}
-/* Hero image: use the official Unicity Unimate woman-with-cup visual as the visual direction requested for Health Journey. */
+:root{--green:#4f8f45;--green2:#79ad52;--lime:#cfe98b;--gold:#f4b83f;--cream:#fffef7;--ink:#234a35;--muted:#6e7e73;--line:#e5edcf}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fffef7;color:var(--ink);font-family:'Anuphan','Noto Sans Thai','Leelawadee UI',sans-serif;-webkit-font-smoothing:antialiased}button,a{font:inherit}button{cursor:pointer}.soft{box-shadow:0 14px 40px rgba(75,130,61,.10)}
+/* Fresh, optimistic wellness direction inspired by Unicity Thailand: bright whites, fresh greens and sunny yellow accents. */
+main{background:#fffef7!important}
+header{background:rgba(255,255,255,.96)!important;border-color:#e7efcf!important}
+#assessment{background:linear-gradient(135deg,#fffef8 0%,#f8fbe9 48%,#edf8d8 100%)!important}
+#assessment>div:first-child{background:radial-gradient(circle at 12% 18%,rgba(255,222,96,.30),transparent 34%),radial-gradient(circle at 88% 10%,rgba(183,226,125,.32),transparent 32%)!important}
+#assessment .rounded-\[48px\]{box-shadow:0 24px 60px rgba(74,125,57,.16)!important}
+#assessment .bg-gradient-to-t{background:linear-gradient(to top,rgba(53,119,59,.04),transparent 52%,rgba(255,255,255,.02))!important}
+#steps{background:transparent!important}
+#steps>div{box-shadow:0 18px 50px rgba(84,128,63,.08)!important;border-color:#e6efcf!important}
+#goals{background:linear-gradient(180deg,rgba(248,252,235,.55),rgba(255,254,247,0))!important}
+#goals .bg-white{box-shadow:0 10px 28px rgba(80,128,62,.08)!important;border-color:#e4edcf!important}
+/* Hero image: official Unicity Unimate woman-with-cup visual. */
 img[alt="ผู้หญิงยิ้มถือเครื่องดื่มเพื่อสุขภาพในบรรยากาศสดใส"]{content:url('https://s3.us-east-1.amazonaws.com/lunar-assets.unicity.com/PRI/content_images/a4ad76725ce346278b08abb8811c4142/assets2Fe8e2c458bcdd488f8b868aefba1dbfd9.webp');object-position:center center}
